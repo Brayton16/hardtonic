@@ -1,0 +1,43 @@
+<div class="container mx-auto p-6 bg-white shadow-md rounded-lg">
+    <!-- Header -->
+    <div class="mb-6 text-center">
+      <h2 class="text-3xl font-bold text-blue-600 mb-2">Orders Management</h2>
+      <p class="text-gray-600">View and update the status of orders.</p>
+    </div>
+  
+    <!-- Orders Table -->
+    <table class="table-auto w-full border-collapse border border-gray-200">
+      <thead>
+        <tr class="bg-blue-100">
+          <th class="border border-gray-300 px-4 py-2">Customer ID</th>
+          <th class="border border-gray-300 px-4 py-2">Purchase Address</th>
+          <th class="border border-gray-300 px-4 py-2">Date</th>
+          <th class="border border-gray-300 px-4 py-2">Status</th>
+          <th class="border border-gray-300 px-4 py-2">Change Status</th>
+
+        </tr>
+      </thead>
+      <tbody> 
+        <tr *ngFor="let order of payments" class="hover:bg-gray-100">
+          <td class="border border-gray-300 px-4 py-2">{{order.User_ID }}</td>
+          <td class="border border-gray-300 px-4 py-2">{{ order.Purchase_Address }}</td>
+          <td class="border border-gray-300 px-4 py-2 text-center">{{ order.createdAt | date:'dd/MM/yyyy HH:mm:ss' }}</td>
+          <td class="border border-gray-300 px-4 py-2 text-center" >{{ order.Order_Status.toUpperCase() }}</td>
+          <td class="border border-gray-300 px-4 py-2">
+            <select
+                class="bg-gray-50 border border-gray-300 text-gray-600 rounded px-2 py-1"
+                [value]="order.Order_Status"
+                (change)="updateStatus(order._id, statusSelect.value, order)"
+                #statusSelect
+                >
+                <option *ngFor="let status of statuses" [value]="status">
+                    {{ status }}
+                </option>
+            </select>
+
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  

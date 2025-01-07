@@ -1,0 +1,45 @@
+<div class="max-w-xs bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow">
+  <img
+    class="rounded-t-lg object-cover w-full h-48"
+    [src]="game.Game_Background_Image"
+    alt="{{ game.Game_Name }}"
+  />
+  <div class="p-4">
+    <h3 class="text-lg font-bold text-gray-800">{{ game.Game_Name }}</h3>
+    <p class="text-gray-600 text-sm truncate">{{ game.Brand }}</p>
+    <p *ngIf="game.Discount === 0" class="text-lg font-semibold text-green-600 mt-2">
+      ${{ game.Game_Price | costarricanPrice:1 }}
+    </p>
+    <div class="flex items-center gap-4" *ngIf="game.Discount > 0">
+      <p class="text-base font-bold text-gray-500 line-through">
+        ${{ game.Game_Price }} <!-- Precio original tachado -->
+      </p>
+      
+      <p class="text-lg font-semibold text-red-600">
+        ${{ (game.Game_Price - (game.Game_Price * game.Discount / 100)) | number:'1.2-2' }} <!-- Precio con descuento redondeado a 2 decimales -->
+      </p>
+    
+      <p class="text-sm font-medium text-green-500">
+        ({{ game.Discount }}% Off) <!-- Descuento en porcentaje -->
+      </p>
+    </div>
+
+    <div class="flex justify-between mt-4">
+      <button
+        class="bg-blue-600 text-white font-medium py-2 px-4 rounded-lg hover:bg-blue-700 transition"
+        (click)="juegoClickeado(game._id)"
+      >
+        View details
+      </button>
+      <!-- Mostrar el botón de Editar solo si es administrador -->
+      <button
+        *ngIf="isAdmin"
+        class="bg-yellow-500 text-white font-medium py-2 px-4 rounded-lg hover:bg-yellow-600 transition"
+        (click)="editarJuego(game._id)"
+      >
+        Edit
+      </button>
+      
+    </div>
+  </div>
+</div>
